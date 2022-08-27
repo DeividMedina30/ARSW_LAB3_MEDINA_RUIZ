@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 public class Consumer extends Thread{
     
     private Queue<Integer> queue;
+
+    public static Boolean ready = new Boolean(true);
     
     
     public Consumer(Queue<Integer> queue){
@@ -25,12 +27,12 @@ public class Consumer extends Thread{
     @Override
     public void run() {
         while (queue.size() > 0) {
-            int elem=queue.poll();
-            synchronized (queue){
-                notifyAll();
+            synchronized (ready){
+                int elem=queue.poll();
+                System.out.println("Consumer consumes "+elem);
+                ready.notifyAll();
             }
-            //
-            System.out.println("Consumer consumes "+elem);
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {

@@ -26,10 +26,6 @@ public class Consumer extends Thread{
     public void run() {
         while (queue.size() > 0) {
             int elem=queue.poll();
-            synchronized (queue){
-                notifyAll();
-            }
-            //
             System.out.println("Consumer consumes "+elem);
             try {
                 Thread.sleep(1000);
