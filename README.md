@@ -10,9 +10,37 @@
 Control de hilos con wait/notify. Productor/consumidor.
 
 1. Revise el funcionamiento del programa y ejecútelo. Mientras esto ocurren, ejecute jVisualVM y revise el consumo de CPU del proceso correspondiente. A qué se debe este consumo?, cual es la clase responsable?
+
+Rta//
+
+El consumo de la CPU, se debe a que siempre el consumidor está preguntando,
+no hay nada que lo esté deteniendo de tomarse un tiempo hasta que el productor tenga más stock.
+Por eso mismo se ve ese incremento tan elevado.
+
+![](Imagenes/ParteUno/PuntoUno.PNG)
+
 2. Haga los ajustes necesarios para que la solución use más eficientemente la CPU, teniendo en cuenta que -por ahora- la producción es lenta y el consumo es rápido. Verifique con JVisualVM que el consumo de CPU se reduzca.
+
+Rta//
+
+En este caso los ajustes que se decidieron implementar fueron de que el 
+consumidor tuviera un tiempo de espera después de haber consumido un producto.
+
+![](Imagenes/ParteUno/PuntoDos.PNG)
+
+![](Imagenes/ParteUno/PuntoDos2.PNG)
+
 3. Haga que ahora el productor produzca muy rápido, y el consumidor consuma lento. Teniendo en cuenta que el productor conoce un límite de Stock (cuantos elementos debería tener, a lo sumo en la cola), haga que dicho límite se respete. Revise el API de la colección usada como cola para ver cómo garantizar que dicho límite no se supere. Verifique que, al poner un límite pequeño para el 'stock', no haya consumo alto de CPU ni errores.
 
+Rta//
+
+![](Imagenes/ParteUno/PuntoTres.PNG)
+
+![](Imagenes/ParteUno/PuntoTres2.PNG)
+
+![](Imagenes/ParteUno/PuntoTres3.PNG)
+
+![](Imagenes/ParteUno/PuntoTres4.PNG)
 
 ##### Parte II. – Antes de terminar la clase.
 
@@ -46,9 +74,36 @@ Sincronización y Dead-Locks.
 	* Cada jugador, permanentemente, ataca a algún otro inmortal. El que primero ataca le resta M puntos de vida a su contrincante, y aumenta en esta misma cantidad sus propios puntos de vida.
 	* El juego podría nunca tener un único ganador. Lo más probable es que al final sólo queden dos, peleando indefinidamente quitando y sumando puntos de vida.
 
+Rta//
+
+Se observa como se mencionaba que en algunos casos quedna dos inmortales y en otros los tres.
+
+![](Imagenes/ParteTres/PuntoUno.PNG)
+
+![](Imagenes/ParteTres/PuntoUno2.PNG)
+
 2. Revise el código e identifique cómo se implemento la funcionalidad antes indicada. Dada la intención del juego, un invariante debería ser que la sumatoria de los puntos de vida de todos los jugadores siempre sea el mismo(claro está, en un instante de tiempo en el que no esté en proceso una operación de incremento/reducción de tiempo). Para este caso, para N jugadores, cual debería ser este valor?.
 
+R//
+
+Si ejecutamos el programa y decimos que solamente queremos un inmortal.
+Concluimos que dicho valor debe de ser de 100 su vida.
+
+Para dos jugadores vemos que en este caso se sigue manteniendo esa condición.
+La suma de la vida de los dos jugadores es 100 dando un total de 200.
+Pero después de un rato de ejecución ya no se cumple la condición.
+
+![](Imagenes/ParteTres/PuntoDos.PNG)
+
+![](Imagenes/ParteTres/PuntoDos2.PNG)
+
+![](Imagenes/ParteTres/PuntoDos3.PNG)
+
 3. Ejecute la aplicación y verifique cómo funcionan las opción ‘pause and check’. Se cumple el invariante?.
+
+R//
+
+![](Imagenes/ParteTres/PuntoTres.PNG)
 
 4. Una primera hipótesis para que se presente la condición de carrera para dicha función (pause and check), es que el programa consulta la lista cuyos valores va a imprimir, a la vez que otros hilos modifican sus valores. Para corregir esto, haga lo que sea necesario para que efectivamente, antes de imprimir los resultados actuales, se pausen todos los demás hilos. Adicionalmente, implemente la opción ‘resume’.
 
