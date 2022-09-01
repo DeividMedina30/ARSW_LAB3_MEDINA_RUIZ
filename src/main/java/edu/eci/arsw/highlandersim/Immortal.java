@@ -109,6 +109,7 @@ public class Immortal extends Thread {
      * Se detienen las peleas de los inmortales de manera sincronizada
      */
     synchronized void stopImmortals(){
+
         this.pause= true;
     }
 
